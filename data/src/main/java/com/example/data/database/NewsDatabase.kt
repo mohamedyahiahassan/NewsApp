@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.data.model.ArticlesItemDto
 import com.example.data.model.RoomTypeConverters
+import com.example.data.model.SavedArticles
 
-@Database(entities = [ArticlesItemDto::class], version = 1, exportSchema = true)
-@TypeConverters(value = [RoomTypeConverters::class])
+@Database(entities = [SavedArticles::class], version = 1, exportSchema = true)
+@TypeConverters(RoomTypeConverters::class)
 abstract class NewsDatabase:RoomDatabase() {
 
     abstract fun NewsDao(): NewsDao
@@ -21,23 +21,18 @@ abstract class NewsDatabase:RoomDatabase() {
         fun init(context: Context){
             if (instance == null) {
 
-                //initialize
-
                 instance = Room.databaseBuilder(
                         context,
                         NewsDatabase::class.java,
                         "newsDB")
                         .fallbackToDestructiveMigration()
                         .build()
-
-
-                }
-
-            }
-
-            fun getInstance(): NewsDatabase {
-
-                return instance!!
             }
         }
+
+        fun getInstance(): NewsDatabase {
+
+            return instance!!
+        }
+    }
 }

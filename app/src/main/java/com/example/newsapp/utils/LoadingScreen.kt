@@ -7,13 +7,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.newsapp.ui.theme.green
+import com.example.newsapp.ui.theme.blue
 
 
 @Composable
@@ -28,7 +26,7 @@ fun LoadingDialog(){
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(
-                    color = green,
+                    color = blue,
                     modifier = Modifier
                         .width(35.sdp)
                         .height(35.sdp)

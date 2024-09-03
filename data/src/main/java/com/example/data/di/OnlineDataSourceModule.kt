@@ -1,9 +1,7 @@
 package com.example.data.di
 
-import com.example.data.dataSource.OnlineDataSourceImpl
-import com.example.data.repository.NewsRepositoryImpl
-import com.example.domain.dataSource.OnlineDataSource
-import com.example.domain.repository.NewsRepository
+import com.example.data.dataSource.OnlineDataSourceRepoImpl
+import com.example.domain.dataSource.OnlineDataSourceRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 object OnlineDataSourceModule {
 
     @Provides
-    fun provideNewsRepo(impl: OnlineDataSourceImpl): OnlineDataSource {
+    fun provideOnlineDataSource(impl: OnlineDataSourceRepoImpl): OnlineDataSourceRepo {
 
         return impl
     }

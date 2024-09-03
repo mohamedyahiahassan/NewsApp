@@ -1,10 +1,8 @@
-package com.example.newsapp
+package com.example.newsapp.ArticleDetails
 
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,9 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,16 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
-import androidx.core.content.ContextCompat.startActivity
 import coil.compose.AsyncImage
 import com.example.domain.model.ArticlesItem
-import com.example.newsapp.utils.LinkText
-import com.example.newsapp.utils.LinkTextData
+import com.example.newsapp.ui.theme.blue
 import com.example.newsapp.utils.sdp
 import com.example.newsapp.utils.ssp
 
@@ -130,8 +125,40 @@ fun ArticlesDetailsContent(
             Icon(Icons.Default.PlayArrow, contentDescription ="continue reading article" )
         }
 
-    }
+        Spacer(modifier = Modifier.weight(1f))
 
+
+        Button(
+            onClick = {
+
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, articlesItem.title + "\n" + "\n" + articlesItem.url)
+                    type = "text/plain"
+                }
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                context.startActivity(shareIntent)
+            },
+            shape = RoundedCornerShape(19.sdp),
+            colors = ButtonDefaults.buttonColors(blue),
+            modifier = Modifier
+                .padding(start = 16.sdp, end = 16.sdp)
+                .fillMaxWidth(1f)
+                .height(65.sdp)
+        ) {
+
+            Text(
+                text = "Share",
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.ssp,
+                color = Color.White
+            )
+
+        }
+
+        Spacer(modifier = Modifier.height(16.sdp))
+
+    }
 
 
 }

@@ -1,4 +1,4 @@
-package com.example.newsapp
+package com.example.newsapp.homeScreen
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -58,7 +58,7 @@ class NewsViewModel @Inject constructor(
 
                         Log.e("error getting headline",it.message.toString())
 
-                        _states.value = NewsContract.States.Error("Error fetching News")
+                        _states.value = NewsContract.States.Error("Error Fetching News")
 
                     }
                     is Resource.Loading -> {
@@ -67,12 +67,7 @@ class NewsViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
 
-                        _states.value = NewsContract.States.Success(it.data?.articles)
-
-
-                        it.data?.articles?.forEach {
-                            Log.e("article",it.toString())
-                        }
+                        _states.value = NewsContract.States.Success(it.data)
 
                     }
                 }

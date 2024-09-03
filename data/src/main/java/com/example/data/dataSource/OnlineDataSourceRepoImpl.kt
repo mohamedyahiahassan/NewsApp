@@ -1,18 +1,15 @@
 package com.example.data.dataSource
 
-import android.content.Context
 import com.example.data.Api.WebServices
 import com.example.data.utils.Resource
-import com.example.domain.dataSource.OnlineDataSource
+import com.example.domain.dataSource.OnlineDataSourceRepo
 import com.example.domain.model.ArticlesItem
-import com.example.domain.model.NewsResponse
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class OnlineDataSourceImpl @Inject constructor(
-    private val webServices: WebServices):OnlineDataSource {
+class OnlineDataSourceRepoImpl @Inject constructor(
+    private val webServices: WebServices):OnlineDataSourceRepo {
 
     override suspend fun getNews(categoryName:String): Flow<Resource<List<ArticlesItem>>> = flow{
 

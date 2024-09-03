@@ -3,6 +3,7 @@ package com.example.newsapp.utils
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -16,8 +17,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavDestination
 import com.example.newsapp.Screens
+import com.example.newsapp.ui.theme.blue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,6 +30,14 @@ fun NewsTopAppBar(currentDestination: NavDestination?,
 
     val backButtonShown = rememberSaveable {
         mutableStateOf(false)
+    }
+
+    val showShareButton = rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    val title = rememberSaveable {
+        mutableStateOf("News App")
     }
 
     val isScrollableTopAppBar = rememberSaveable {
@@ -42,6 +53,10 @@ fun NewsTopAppBar(currentDestination: NavDestination?,
                 backButtonShown.value = false
 
                 isScrollableTopAppBar.value = true
+
+                showShareButton.value = false
+
+                title.value = "News App"
             }
 
             Screens.ArticleDetails.route ->{
@@ -50,6 +65,10 @@ fun NewsTopAppBar(currentDestination: NavDestination?,
                 backButtonShown.value = true
 
                 isScrollableTopAppBar.value = false
+
+                showShareButton.value = true
+
+                title.value = ""
             }
 
 
@@ -61,7 +80,10 @@ fun NewsTopAppBar(currentDestination: NavDestination?,
 
     CenterAlignedTopAppBar(
         title = {
-            Text(text = "News App")
+            Text(
+                text = title.value,
+                color = blue,
+                fontWeight = FontWeight.Bold)
                 },
         navigationIcon = {
 

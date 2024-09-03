@@ -1,8 +1,7 @@
 package com.example.data.model
 
-import android.provider.MediaStore
-import android.util.Log
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
@@ -35,17 +34,13 @@ data class NewsResponseDto(
 
 		}
 
-
 		return NewsResponse(totalResults,list,status)
 	}
 }
 
-@Entity
-@TypeConverters(RoomTypeConverters::class)
+
 data class ArticlesItemDto(
 
-	@PrimaryKey(autoGenerate = true)
-	val id:Int?=null,
 
 	@field:SerializedName("publishedAt")
 	val publishedAt: String? = null,
@@ -61,6 +56,10 @@ data class ArticlesItemDto(
 
 	@field:SerializedName("source")
 	val source: SourceDto? = null,
+
+	val sourceName:String?=null,
+
+	val sourceId:String?=null,
 
 	@field:SerializedName("title")
 	val title: String? = null,
@@ -90,20 +89,6 @@ data class SourceDto(
 	fun toSource(): Source{
 
 		return Source(name, id)
-	}
-}
-
-class RoomTypeConverters {
-	@TypeConverter
-	fun convertVideoListJSONString(sourceDto: SourceDto): String? {
-
-		return Gson().toJson(sourceDto)
-	}
-
-	@TypeConverter
-	fun convertJSONStringToVideoList(jsonString: String): SourceDto? {
-
-		return Gson().fromJson(jsonString, object : TypeToken<SourceDto>() {}.type)
 	}
 }
 
