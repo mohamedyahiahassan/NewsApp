@@ -12,5 +12,4 @@ class NewsApp:Application() {
 
         NewsDatabase.init(this)
     }
-
 }
