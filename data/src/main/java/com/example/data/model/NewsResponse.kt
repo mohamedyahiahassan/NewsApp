@@ -1,0 +1,110 @@
+package com.example.data.model
+
+import android.provider.MediaStore
+import android.util.Log
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.example.domain.model.ArticlesItem
+import com.example.domain.model.NewsResponse
+import com.example.domain.model.Source
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
+
+data class NewsResponseDto(
+
+	@field:SerializedName("totalResults")
+	val totalResults: Int? = null,
+
+	@field:SerializedName("articles")
+	val articles: List<ArticlesItemDto?>? = null,
+
+	@field:SerializedName("status")
+	val status: String? = null
+){
+
+	fun toNewsResponse():NewsResponse{
+
+		val list = mutableListOf<ArticlesItem>()
+
+		articles?.forEach {
+
+			it?.toArticle()?.let { it1 -> list.add(it1) }
+
+		}
+
+
+		return NewsResponse(totalResults,list,status)
+	}
+}
+
+@Entity
+@TypeConverters(RoomTypeConverters::class)
+data class ArticlesItemDto(
+
+	@PrimaryKey(autoGenerate = true)
+	val id:Int?=null,
+
+	@field:SerializedName("publishedAt")
+	val publishedAt: String? = null,
+
+	@field:SerializedName("author")
+	val author: String? = null,
+
+	@field:SerializedName("urlToImage")
+	val urlToImage: String? = null,
+
+	@field:SerializedName("description")
+	val description: String? = null,
+
+	@field:SerializedName("source")
+	val source: SourceDto? = null,
+
+	@field:SerializedName("title")
+	val title: String? = null,
+
+	@field:SerializedName("url")
+	val url: String? = null,
+
+	@field:SerializedName("content")
+	val content: String? = null
+){
+
+	fun toArticle():ArticlesItem{
+
+		return ArticlesItem(publishedAt, author, urlToImage, description,source?.toSource(),title, url, content)
+	}
+}
+
+data class SourceDto(
+
+	@field:SerializedName("name")
+	val name: String? = null,
+
+	@field:SerializedName("id")
+	val id: String? = null
+){
+
+	fun toSource(): Source{
+
+		return Source(name, id)
+	}
+}
+
+class RoomTypeConverters {
+	@TypeConverter
+	fun convertVideoListJSONString(sourceDto: SourceDto): String? {
+
+		return Gson().toJson(sourceDto)
+	}
+
+	@TypeConverter
+	fun convertJSONStringToVideoList(jsonString: String): SourceDto? {
+
+		return Gson().fromJson(jsonString, object : TypeToken<SourceDto>() {}.type)
+	}
+}
+
+
